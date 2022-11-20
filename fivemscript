@@ -1,0 +1,44 @@
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/NiceBBMBThai12/NBTScript/main/UI-Library-Robloxx"))()
+local window = library:Win()
+local tap1 = window:addtap("Five M")
+local page1 = tap1:addpage()
+local page2 = tap1:addpage()
+local page3 = tap1:addpage()
+local page4 = tap1:addpage()
+page1:Ti("หมัดไฟ")
+page1:Toggle("FiveM [ หมัดไฟ ]",nil, function(value)
+local Fire = Instance.new("Fire")
+Fire.Parent = game.Players.LocalPlayer.Character.RightHand
+Fire.Heat = 5
+Fire.Size = 2
+end)
+page1:Toggle("bringplayers", function(value)
+local player = game.Players.LocalPlayer
+if player.Character then
+if player.Character:FindFirstChild("Humanoid") then
+player.Character.Humanoid.Name = "1"
+end
+local l = player.Character["1"]:Clone()
+l.Parent = player.Character
+l.Name = "Humanoid"; wait(0.1)
+player.Character["1"]:Destroy()
+workspace.CurrentCamera.CameraSubject = player.Character.Humanoid
+player.Character.Animate.Disabled = true; wait(0.1)
+player.Character.Animate.Disabled = false
+end
+end)
+
+page1:Toggle("Anti Kick", function(value)
+local gt = getrawmetatable(game)
+local old = gt.__namecall
+setreadonly(gt, false)
+gt.__namecall = newcclosure(function(self, ...)
+local method = getnamecallmethod()
+if method == "Kick" or method == "kick" then
+    print(...)
+wait(9e9)
+return
+end
+return old(self,...)
+end)
+end)
